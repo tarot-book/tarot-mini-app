@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../models/deck.dart';
-import '../widgets/deck_selector.dart';
+import '../widgets/decks/deck_selector.dart';
 import '../services/deck_service.dart';
 
 class DeckSelectorScreen extends StatefulWidget {
