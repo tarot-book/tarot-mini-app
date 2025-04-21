@@ -11,7 +11,7 @@ final ThemeData appTheme = ThemeData(
     elevation: 0,
   ),
   textTheme: const TextTheme(
-    headlineLarge: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-    bodyMedium: TextStyle(fontSize: 16),
+    headlineLarge: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+    bodyMedium: TextStyle(fontSize: 12),
   ),
 );
