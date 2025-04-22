@@ -53,7 +53,6 @@ class _DeckSelectorState extends State<DeckSelector> {
 
   @override
   Widget build(BuildContext context) {
-    final deck = widget.decks[_currentPage];
     final isWide =
         MediaQuery.of(context).size.width > AppLayout.maxParagraphWidth;
 

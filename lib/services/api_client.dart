@@ -20,6 +20,15 @@ class ApiClient {
     return jsonDecode(response.body);
   }
 
+Future<Map<String, dynamic>> getObject(String endpoint) async {
+  final url = Uri.parse('$_baseUrl$endpoint');
+  final headers = _buildHeaders();
+  final response = await http.get(url, headers: headers);
+  _handleErrors(response);
+  return jsonDecode(response.body) as Map<String, dynamic>;
+}
+
+
   Map<String, String> _buildHeaders() {
     final auth = 'Basic ${base64Encode(utf8.encode('$_username:$_password'))}';
     return {
