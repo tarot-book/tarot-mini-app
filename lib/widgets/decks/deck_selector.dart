@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tarot_mini_app/models/deck.dart';
-import 'package:tarot_mini_app/widgets/decks/deck_descriptor.dart';
-import 'deck_carousel.dart';
+import 'package:tarot_mini_app/theme/app_layout.dart';
+import 'deck_selector_layouts.dart';
 import 'deck_pager_dots.dart';
 
 class DeckSelector extends StatefulWidget {
@@ -22,7 +22,7 @@ class _DeckSelectorState extends State<DeckSelector> {
       index,
       duration: const Duration(milliseconds: 300),
       curve: Curves.easeOut,
-    );    
+    );
     setState(() => _currentPage = index);
   }
 
@@ -36,51 +36,35 @@ class _DeckSelectorState extends State<DeckSelector> {
   void dispose() {
     _pageController.dispose();
     super.dispose();
-  }  
+  }
 
   @override
   Widget build(BuildContext context) {
     final deck = widget.decks[_currentPage];
-    final isWide = MediaQuery.of(context).size.width > 600;
+    final isWide =
+        MediaQuery.of(context).size.width > AppLayout.maxParagraphWidth;
 
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: isWide
-              ? Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(
-                      width: 220,
-                      height: 260,
-                      child: DeckCarousel(
-                        controller: _pageController,
-                        decks: widget.decks,
-                        currentPage: _currentPage,
-                        onPageChanged: _goToPage,
-                      ),
-                    ),
-                    const SizedBox(width: 24),
-                    Expanded(child: DeckDescription(deck: deck)),
-                  ],
-                )
-              : Column(
-                  children: [
-                    SizedBox(
-                      height: 260,
-                      child: DeckCarousel(
-                        controller: _pageController,
-                        decks: widget.decks,
-                        currentPage: _currentPage,
-                        onPageChanged: _goToPage,
-                      ),
-                    ),
-                    const SizedBox(height: 16),
-                    DeckDescription(deck: deck),
-                  ],
-                ),
+          padding: const EdgeInsets.symmetric(
+            horizontal: AppLayout.horizontalPadding,
+          ),
+          child:
+              isWide
+                  ? WideDeckSelectorView(
+                    decks: widget.decks,
+                    currentPage: _currentPage,
+                    controller: _pageController,
+                    onPageChanged: _goToPage,
+                  )
+                  : NarrowDeckSelectorView(
+                    decks: widget.decks,
+                    currentPage: _currentPage,
+                    controller: _pageController,
+                    onPageChanged: _goToPage,
+                  ),
         ),
         const SizedBox(height: 16),
         DeckPagerDots(

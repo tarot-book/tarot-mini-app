@@ -6,4 +6,5 @@ class AppColors {
   static const accent = Colors.red;
   static const background = Colors.black87;
   static const card = Colors.white10;
+  static const surface = Color(0xCC000000);
 }

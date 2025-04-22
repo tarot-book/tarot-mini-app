@@ -14,4 +14,9 @@ final ThemeData appTheme = ThemeData(
     headlineLarge: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
     bodyMedium: TextStyle(fontSize: 14),
   ),
+  colorScheme: ColorScheme.dark(
+    primary: AppColors.primary,
+    surface: AppColors.surface, // or AppColors.card или #212121
+
+  ),  
 );
