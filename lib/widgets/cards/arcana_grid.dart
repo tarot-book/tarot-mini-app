@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tarot_mini_app/models/arcana_card_data.dart';
+import 'package:tarot_mini_app/models/card.dart';
 import 'package:tarot_mini_app/theme/app_layout.dart';
 import 'package:tarot_mini_app/widgets/cards/arcana_card.dart';
 

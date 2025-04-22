@@ -1,4 +1,3 @@
-import 'package:tarot_mini_app/models/arcana_card_data.dart';
 import 'package:tarot_mini_app/models/card.dart';
 import 'package:tarot_mini_app/models/major_card.dart';
 

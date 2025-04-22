@@ -1,4 +1,11 @@
-// Общий интерфейс для всех карт
+// Lightweight interface for displaying cards in grid/list
+abstract class ArcanaCardData {
+  String get idStr;      // unique identifier (as string)
+  String get title;      // card title to show in thumbnails
+  String get imageUrl;   // image URL for preview
+}
+
+// Common interface for all detailed card types
 abstract class FullCardData {
   int get id;
   int get deckId;
@@ -7,11 +14,11 @@ abstract class FullCardData {
   List<CardMeaning> get meanings;
 }
 
-// Общая модель значений
+// Shared model for card meanings
 class CardMeaning {
-  final int id;
-  final String position;
-  final int source;
+  final int id;             // unique meaning ID
+  final String position;    // card position (e.g. upright, reversed)
+  final int source;         // ID of the source of this meaning
 
   CardMeaning({
     required this.id,
@@ -19,6 +26,7 @@ class CardMeaning {
     required this.source,
   });
 
+  /// Creates a [CardMeaning] object from a JSON map
   factory CardMeaning.fromJson(Map<String, dynamic> json) => CardMeaning(
         id: json['id'],
         position: json['position'],
@@ -26,15 +34,15 @@ class CardMeaning {
       );
 }
 
-// Старший аркан
+// Detailed model for Major Arcana card
 class MajorCardDetail implements FullCardData {
-  final int id;
-  final int deck;
-  final String image;
-  final String name;
-  final String orgname;
-  final int number;
-  final List<CardMeaning> meanings;
+  final int id;                // card ID
+  final int deck;              // deck ID
+  final String image;          // URL to card image
+  final String name;           // localized card name
+  final String orgname;        // original name (e.g. French)
+  final int number;            // Major Arcana number (0-21)
+  final List<CardMeaning> meanings; // interpretations
 
   MajorCardDetail({
     required this.id,
@@ -46,6 +54,7 @@ class MajorCardDetail implements FullCardData {
     required this.meanings,
   });
 
+  /// Creates a [MajorCardDetail] object from a JSON map
   factory MajorCardDetail.fromJson(Map<String, dynamic> json) => MajorCardDetail(
         id: json['id'],
         deck: json['deck'],
@@ -58,22 +67,24 @@ class MajorCardDetail implements FullCardData {
             .toList(),
       );
 
+  /// Returns the deck ID in the format required by [FullCardData]
   @override
   int get deckId => deck;
 
+  /// Returns the image URL in the format required by [FullCardData]
   @override
   String get imageUrl => image;
 }
 
-// Младший аркан
+// Detailed model for Minor Arcana card
 class MinorCardDetail implements FullCardData {
-  final int id;
-  final int deck;
-  final String image;
-  final String name;
-  final int rank;
-  final int suit;
-  final List<CardMeaning> meanings;
+  final int id;                // card ID
+  final int deck;              // deck ID
+  final String image;          // URL to card image
+  final String name;           // card name
+  final int rank;              // card rank (e.g. 1 = Ace)
+  final int suit;              // card suit (e.g. 1 = Wands)
+  final List<CardMeaning> meanings; // interpretations
 
   MinorCardDetail({
     required this.id,
@@ -85,6 +96,7 @@ class MinorCardDetail implements FullCardData {
     required this.meanings,
   });
 
+  /// Creates a [MinorCardDetail] object from a JSON map
   factory MinorCardDetail.fromJson(Map<String, dynamic> json) => MinorCardDetail(
         id: json['id'],
         deck: json['deck'],
@@ -97,9 +109,11 @@ class MinorCardDetail implements FullCardData {
             .toList(),
       );
 
+  /// Returns the deck ID in the format required by [FullCardData]
   @override
   int get deckId => deck;
 
+  /// Returns the image URL in the format required by [FullCardData]
   @override
   String get imageUrl => image;
 }
