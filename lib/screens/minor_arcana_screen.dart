@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 class MinorArcanaScreen extends StatelessWidget {
-  const MinorArcanaScreen({super.key});
+  final int deckId;
+  const MinorArcanaScreen({super.key, required this.deckId});
 
   @override
   Widget build(BuildContext context) {

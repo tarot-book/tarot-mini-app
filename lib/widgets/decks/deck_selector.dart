@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:tarot_mini_app/models/deck.dart';
+import 'package:tarot_mini_app/providers/app_state.dart';
 import 'package:tarot_mini_app/theme/app_layout.dart';
 import 'deck_selector_layouts.dart';
 import 'deck_pager_dots.dart';
@@ -13,6 +15,8 @@ class DeckSelector extends StatefulWidget {
   State<DeckSelector> createState() => _DeckSelectorState();
 }
 
+
+
 class _DeckSelectorState extends State<DeckSelector> {
   int _currentPage = 0;
   late final PageController _pageController;
@@ -24,12 +28,21 @@ class _DeckSelectorState extends State<DeckSelector> {
       curve: Curves.easeOut,
     );
     setState(() => _currentPage = index);
+    final selectedDeck = widget.decks[index];
+    Provider.of<AppState>(context, listen: false).selectDeck(selectedDeck.id);    
   }
 
   @override
   void initState() {
     super.initState();
     _pageController = PageController();
+    // initialize the provider
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+    final firstDeck = widget.decks.isNotEmpty ? widget.decks[0] : null;
+    if (firstDeck != null) {
+      Provider.of<AppState>(context, listen: false).selectDeck(firstDeck.id);
+    }
+  });  
   }
 
   @override

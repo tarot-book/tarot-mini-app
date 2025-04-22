@@ -13,7 +13,7 @@ import 'package:tarot_mini_app/main.dart';
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
-    await tester.pumpWidget(const TarotMiniApp());
+    await tester.pumpWidget(const TarotApp());
 
     // Verify that our counter starts at 0.
     expect(find.text('0'), findsOneWidget);
