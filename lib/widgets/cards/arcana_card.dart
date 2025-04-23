@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:tarot_mini_app/models/arcana_card_data.dart';
+import 'package:tarot_mini_app/models/card.dart';
+import 'package:tarot_mini_app/theme/colors.dart';
 
 class ArcanaCard extends StatelessWidget {
   final ArcanaCardData card;
@@ -17,12 +18,12 @@ class ArcanaCard extends StatelessWidget {
           Navigator.pushNamed(
             context,
             '/card',
-            arguments: {'cardId': int.parse(card.idStr), 'arcanaType': 'major'},
+            arguments: {'cardId': card.id, 'arcanaType': 'major'},
           );
         },
 
-        hoverColor: Theme.of(context).colorScheme.primary.withOpacity(0.1),
-        splashColor: Theme.of(context).colorScheme.primary.withOpacity(0.2),
+        hoverColor: Theme.of(context).hoverColor,
+        splashColor: Theme.of(context).splashColor,
         child: ClipRRect(
           borderRadius: BorderRadius.circular(12),
           child: Stack(
@@ -44,7 +45,7 @@ class ArcanaCard extends StatelessWidget {
                     vertical: 4,
                     horizontal: 8,
                   ),
-                  color: Colors.black.withOpacity(0.7),
+                  color: AppColors.overlayDark,
                   child: Text(
                     card.title,
                     style: Theme.of(

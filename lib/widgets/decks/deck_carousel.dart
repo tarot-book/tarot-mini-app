@@ -2,6 +2,39 @@ import 'package:flutter/material.dart';
 import '../../models/deck.dart';
 import 'deck_view.dart';
 
+class CarouselArrow extends StatelessWidget {
+  final bool isLeft;
+  final VoidCallback onPressed;
+  final bool visible;
+
+  const CarouselArrow({
+    super.key,
+    required this.isLeft,
+    required this.onPressed,
+    this.visible = true,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    if (!visible) return const SizedBox.shrink();
+
+    return Positioned(
+      left: isLeft ? 0 : null,
+      right: isLeft ? null : 0,
+      child: IconButton(
+        icon: Icon(
+          isLeft ? Icons.arrow_left : Icons.arrow_right,
+          size: 32,
+        ),
+        color: Colors.white70,
+        onPressed: onPressed,
+        hoverColor: Colors.white24
+      ),
+    );
+  }
+}
+
+
 class DeckCarousel extends StatelessWidget {
   final PageController controller;
   final List<Deck> decks;
@@ -16,14 +49,15 @@ class DeckCarousel extends StatelessWidget {
     required this.onPageChanged,
   });
 
-
-
   @override
   Widget build(BuildContext context) {
-
     void goToPage(int index) {
       if (index >= 0 && index < decks.length) {
-        controller.animateToPage(index, duration: const Duration(milliseconds: 300), curve: Curves.easeOut);
+        controller.animateToPage(
+          index,
+          duration: const Duration(milliseconds: 300),
+          curve: Curves.easeOut,
+        );
         onPageChanged(index);
       }
     }
@@ -47,24 +81,16 @@ class DeckCarousel extends StatelessWidget {
             itemBuilder: (context, index) => DeckCard(deck: decks[index]),
           ),
         ),
-        if (currentPage > 0)
-          Positioned(
-            left: 0,
-            child: IconButton(
-              icon: const Icon(Icons.arrow_left, size: 32),
-              color: Colors.white70,
-              onPressed: () => goToPage(currentPage - 1),
-            ),
-          ),
-        if (currentPage < decks.length - 1)
-          Positioned(
-            right: 0,
-            child: IconButton(
-              icon: const Icon(Icons.arrow_right, size: 32),
-              color: Colors.white70,
-              onPressed: () => goToPage(currentPage + 1),
-            ),
-          ),
+        CarouselArrow(
+          isLeft: true,
+          onPressed: () => goToPage(currentPage - 1),
+          visible: currentPage > 0,
+        ),
+        CarouselArrow(
+          isLeft: false,
+          onPressed: () => goToPage(currentPage + 1),
+          visible: currentPage < decks.length - 1,
+        ),
       ],
     );
   }

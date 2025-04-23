@@ -1,17 +1,18 @@
-import 'arcana_card_data.dart';
+import 'package:tarot_mini_app/models/card.dart';
+
 
 class MajorCard implements ArcanaCardData {
-  final int id;
+  final int _id;
   final String name;
   final String orgname;
   final String image;
 
   MajorCard({
-    required this.id,
+    required int id,
     required this.name,
     required this.orgname,
     required this.image,
-  });
+  }) : _id = id;
 
   factory MajorCard.fromJson(Map<String, dynamic> json) {
     return MajorCard(
@@ -23,7 +24,7 @@ class MajorCard implements ArcanaCardData {
   }
 
   @override
-  String get idStr => id.toString();
+  int get id => _id;
 
   @override
   String get title => name;

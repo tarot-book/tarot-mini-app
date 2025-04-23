@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tarot_mini_app/theme/colors.dart';
 
 class ArcanaMenuItem extends StatelessWidget {
   final String title;
@@ -25,8 +26,8 @@ class ArcanaMenuItem extends StatelessWidget {
         child: InkWell(
           borderRadius: BorderRadius.circular(12),
           onTap: onTap,
-          splashColor: Colors.amber.withOpacity(0.3),
-          highlightColor: Colors.amber.withOpacity(0.1),
+          splashColor: AppColors.amberSplash,
+          highlightColor: AppColors.amberHighlight,
           child: Padding(
             padding: const EdgeInsets.all(16),
             child: Column(

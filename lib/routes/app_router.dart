@@ -6,28 +6,33 @@ import 'package:tarot_mini_app/screens/major_arcana_screen.dart';
 import 'package:tarot_mini_app/screens/minor_arcana_screen.dart';
 
 class AppRouter {
+  static Map<String, dynamic> _extractArgs(RouteSettings settings) {
+    final args = settings.arguments;
+    if (args is Map<String, dynamic>) return args;
+    throw ArgumentError('Expected Map<String, dynamic> in route arguments');
+  }
+
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
       case '/major':
-        final args = settings.arguments as Map<String, dynamic>;
-        final deckId = args['deckId'] as int;
+        final deckId = _extractArgs(settings)['deckId'];
         return MaterialPageRoute(
           builder: (_) => MajorArcanaScreen(deckId: deckId),
         );
-
       case '/minor':
-        final args = settings.arguments as Map<String, dynamic>;
-        final deckId = args['deckId'] as int;
+        final deckId = _extractArgs(settings)['deckId'];
         return MaterialPageRoute(
           builder: (_) => MinorArcanaScreen(deckId: deckId),
         );
       case '/card':
         final args = settings.arguments as Map<String, dynamic>;
-        final id = args['cardId'] as int;
-        final arcanaType = args['arcanaType'] as String; // 'major' или 'minor'
-
+        String arcanaType = _extractArgs(settings)['arcanaType'];
         return MaterialPageRoute(
-          builder: (_) => CardDetailScreen(cardId: id, arcanaType: arcanaType),
+          builder:
+              (_) => CardDetailScreen(
+                cardId: args['cardId'],
+                arcanaType: arcanaType,
+              ),
         );
 
       case '/':
