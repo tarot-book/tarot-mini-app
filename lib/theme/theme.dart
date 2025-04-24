@@ -13,6 +13,8 @@ final ThemeData appTheme = ThemeData(
   ),
   colorScheme: ColorScheme.dark(
     primary: AppColors.primary,
+    secondary: AppColors.secondary,
+    // secondary: Color.alphaBlend(AppColors.primaryHover, AppColors.card),
     surface: AppColors.surface, // or AppColors.card или #212121
   ),
   hoverColor: Color.alphaBlend(AppColors.primaryHover, AppColors.card),
@@ -30,5 +32,24 @@ final ThemeData appTheme = ThemeData(
         return null;
       }),
     ),
+  ),
+  listTileTheme: ListTileThemeData(
+    selectedColor: AppColors.card, // text and icon color when selected
+    selectedTileColor: AppColors.card, // background color when selected
+    tileColor: AppColors.card, // background color for unselected
+  ),
+  bottomSheetTheme: BottomSheetThemeData(
+    // Полупрозрачный фон: берем surface из colorScheme и ставим альфу 0xCC (~80%)
+    backgroundColor: ColorScheme.dark(
+      primary: AppColors.primary,
+      secondary: AppColors.secondary,
+      surface: AppColors.surface,
+    ).surface.withAlpha(0x14),
+    // Скругление верхних углов
+    shape: const RoundedRectangleBorder(
+      borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+    ),
+    // Можно задать elevation, modalElevation и другие свойства:
+    modalElevation: 4,
   ),
 );

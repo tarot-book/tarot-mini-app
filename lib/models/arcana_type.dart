@@ -1,0 +1,4 @@
+enum ArcanaType {
+  major,
+  minor
+}

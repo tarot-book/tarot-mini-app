@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:tarot_mini_app/models/deck.dart';
 
 class MinorArcanaScreen extends StatelessWidget {
-  final int deckId;
-  const MinorArcanaScreen({super.key, required this.deckId});
+  final Deck deck;
+  const MinorArcanaScreen({super.key, required this.deck});
 
   @override
   Widget build(BuildContext context) {

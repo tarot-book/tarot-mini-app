@@ -1,5 +1,6 @@
 // lib/routes/app_router.dart
 import 'package:flutter/material.dart';
+import 'package:tarot_mini_app/models/arcana_type.dart';
 import 'package:tarot_mini_app/screens/card_detail_screen.dart';
 import 'package:tarot_mini_app/screens/home_screen.dart';
 import 'package:tarot_mini_app/screens/major_arcana_screen.dart';
@@ -15,18 +16,18 @@ class AppRouter {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
       case '/major':
-        final deckId = _extractArgs(settings)['deckId'];
+        final deck = _extractArgs(settings)['deck'];
         return MaterialPageRoute(
-          builder: (_) => MajorArcanaScreen(deckId: deckId),
+          builder: (_) => MajorArcanaScreen(deck: deck),
         );
       case '/minor':
-        final deckId = _extractArgs(settings)['deckId'];
+        final deck = _extractArgs(settings)['deck'];
         return MaterialPageRoute(
-          builder: (_) => MinorArcanaScreen(deckId: deckId),
+          builder: (_) => MinorArcanaScreen(deck: deck),
         );
       case '/card':
         final args = settings.arguments as Map<String, dynamic>;
-        String arcanaType = _extractArgs(settings)['arcanaType'];
+        ArcanaType arcanaType = _extractArgs(settings)['arcanaType'];
         return MaterialPageRoute(
           builder:
               (_) => CardDetailScreen(

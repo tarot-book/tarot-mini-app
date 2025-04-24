@@ -29,7 +29,7 @@ class _DeckSelectorState extends State<DeckSelector> {
     );
     setState(() => _currentPage = index);
     final selectedDeck = widget.decks[index];
-    Provider.of<AppState>(context, listen: false).selectDeck(selectedDeck.id);    
+    Provider.of<AppState>(context, listen: false).selectDeck(selectedDeck);    
   }
 
   @override
@@ -40,7 +40,7 @@ class _DeckSelectorState extends State<DeckSelector> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
     final firstDeck = widget.decks.isNotEmpty ? widget.decks[0] : null;
     if (firstDeck != null) {
-      Provider.of<AppState>(context, listen: false).selectDeck(firstDeck.id);
+      Provider.of<AppState>(context, listen: false).selectDeck(firstDeck);
     }
   });  
   }

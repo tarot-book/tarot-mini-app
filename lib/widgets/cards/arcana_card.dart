@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tarot_mini_app/models/arcana_type.dart';
 import 'package:tarot_mini_app/models/card.dart';
 import 'package:tarot_mini_app/theme/colors.dart';
 
@@ -10,7 +11,7 @@ class ArcanaCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: Colors.transparent,
+      color: Theme.of(context).cardColor,
       borderRadius: BorderRadius.circular(12),
       child: InkWell(
         borderRadius: BorderRadius.circular(12),
@@ -18,48 +19,68 @@ class ArcanaCard extends StatelessWidget {
           Navigator.pushNamed(
             context,
             '/card',
-            arguments: {'cardId': card.id, 'arcanaType': 'major'},
+            arguments: {'cardId': card.id, 'arcanaType': ArcanaType.major},
           );
         },
-
         hoverColor: Theme.of(context).hoverColor,
         splashColor: Theme.of(context).splashColor,
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(12),
-          child: Stack(
-            children: [
-              AspectRatio(
-                aspectRatio: 2 / 3,
-                child: Image.network(
-                  card.imageUrl,
-                  fit: BoxFit.contain,
-                  width: double.infinity,
-                ),
-              ),
-              Positioned(
-                bottom: 0,
-                left: 0,
-                right: 0,
-                child: Container(
-                  padding: const EdgeInsets.symmetric(
-                    vertical: 4,
-                    horizontal: 8,
-                  ),
-                  color: AppColors.overlayDark,
-                  child: Text(
-                    card.title,
-                    style: Theme.of(
-                      context,
-                    ).textTheme.bodyMedium?.copyWith(color: Colors.white),
-                    textAlign: TextAlign.center,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                ),
-              ),
-            ],
+        child: Padding(
+          padding: const EdgeInsets.all(8),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(12),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                _ArcanaImage(imageUrl: card.imageUrl),
+                const SizedBox(height: 4),
+                _ArcanaTitle(title: card.title),
+              ],
+            ),
           ),
         ),
+      ),
+    );
+  }
+}
+
+/// Extracted image widget for readability
+class _ArcanaImage extends StatelessWidget {
+  final String imageUrl;
+
+  const _ArcanaImage({required this.imageUrl});
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: AspectRatio(
+        aspectRatio: 2 / 3,
+        child: Image.network(
+          imageUrl,
+          fit: BoxFit.contain,
+          width: double.infinity,
+        ),
+      ),
+    );
+  }
+}
+
+/// Extracted title overlay widget
+class _ArcanaTitle extends StatelessWidget {
+  final String title;
+
+  const _ArcanaTitle({required this.title});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+      color: AppColors.overlayDark,
+      child: Text(
+        title,
+        style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Colors.white),
+        textAlign: TextAlign.center,
+        maxLines: 1,
+        overflow: TextOverflow.ellipsis,
       ),
     );
   }

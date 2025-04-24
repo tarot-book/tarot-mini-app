@@ -9,7 +9,7 @@ class ActionsMenu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final deckId = Provider.of<AppState>(context).selectedDeckId;
+    final deck = Provider.of<AppState>(context).selectedDeck;
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
       child: Wrap(
@@ -20,12 +20,12 @@ class ActionsMenu extends StatelessWidget {
           ArcanaMenuItem(
             title: 'Старшие арканы',
             imagePath: 'assets/images/fool.png',
-            onTap: () => Navigator.pushNamed(context, '/major', arguments: {'deckId': deckId},),
+            onTap: () => Navigator.pushNamed(context, '/major', arguments: {'deck': deck},),
           ),
           ArcanaMenuItem(
             title: 'Младшие арканы',
             imagePath: 'assets/images/suits.png',
-            onTap: () => Navigator.pushNamed(context, '/minor', arguments: {'deckId': deckId},),
+            onTap: () => Navigator.pushNamed(context, '/minor', arguments: {'deck': deck},),
           ),
         ],
       ),

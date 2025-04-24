@@ -1,4 +1,6 @@
 // Lightweight interface for displaying cards in grid/list
+import 'package:tarot_mini_app/models/meaning.dart';
+
 abstract class ArcanaCardData {
   int get id; // unique identifier
   String get title; // card title to show in thumbnails
@@ -11,24 +13,11 @@ abstract class FullCardData {
   int get deckId;
   String get name;
   String get imageUrl;
-  List<CardMeaning> get meanings;
+  List<CardMeaningRef> get meanings;
 }
 
-// Shared model for card meanings
-class CardMeaning {
-  final int id; // unique meaning ID
-  final String position; // card position (e.g. upright, reversed)
-  final int source; // ID of the source of this meaning
+// Shared model for card meanings references (usually, in a list)
 
-  CardMeaning({required this.id, required this.position, required this.source});
-
-  /// Creates a [CardMeaning] object from a JSON map
-  factory CardMeaning.fromJson(Map<String, dynamic> json) => CardMeaning(
-    id: json['id'],
-    position: json['position'],
-    source: json['source'],
-  );
-}
 
 // Detailed model for Major Arcana card
 class MajorCardDetail implements FullCardData {
@@ -38,7 +27,7 @@ class MajorCardDetail implements FullCardData {
   final String _name; // localized card name
   final String orgname; // original name (e.g. French)
   final int number; // Major Arcana number (0-21)
-  final List<CardMeaning> _meanings; // interpretations
+  final List<CardMeaningRef> _meanings; // interpretations
 
   MajorCardDetail({
     required  int id,
@@ -47,7 +36,7 @@ class MajorCardDetail implements FullCardData {
     required String name,
     required this.orgname,
     required this.number,
-    required List<CardMeaning> meanings,
+    required List<CardMeaningRef> meanings,
   }) : _id = id, _name = name, _meanings = meanings;
 
   /// Creates a [MajorCardDetail] object from a JSON map
@@ -61,7 +50,7 @@ class MajorCardDetail implements FullCardData {
         number: json['number'],
         meanings:
             (json['meanings'] as List)
-                .map((m) => CardMeaning.fromJson(m))
+                .map((m) => CardMeaningRef.fromJson(m))
                 .toList(),
       );
 
@@ -77,7 +66,7 @@ class MajorCardDetail implements FullCardData {
   int get id => _id;
   
   @override
-  List<CardMeaning> get meanings => _meanings;
+  List<CardMeaningRef> get meanings => _meanings;
   
   @override
   String get name => _name;
@@ -91,7 +80,7 @@ class MinorCardDetail implements FullCardData {
   final String _name; // card name
   final int rank; // card rank (e.g. 1 = Ace)
   final int suit; // card suit (e.g. 1 = Wands)
-  final List<CardMeaning> _meanings; // interpretations
+  final List<CardMeaningRef> _meanings; // interpretations
 
   MinorCardDetail({
     required int id,
@@ -100,7 +89,7 @@ class MinorCardDetail implements FullCardData {
     required String name,
     required this.rank,
     required this.suit,
-    required  List<CardMeaning> meanings,
+    required  List<CardMeaningRef> meanings,
   })  : _id = id,
         _name = name,
         _meanings = meanings;
@@ -116,7 +105,7 @@ class MinorCardDetail implements FullCardData {
         suit: json['suit'],
         meanings:
             (json['meanings'] as List)
-                .map((m) => CardMeaning.fromJson(m))
+                .map((m) => CardMeaningRef.fromJson(m))
                 .toList(),
       );
 
@@ -132,7 +121,7 @@ class MinorCardDetail implements FullCardData {
   int get id => _id;
   
   @override
-  List<CardMeaning> get meanings => _meanings;
+  List<CardMeaningRef> get meanings => _meanings;
   
   @override
   String get name => _name;
