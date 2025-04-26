@@ -33,7 +33,6 @@ class CardImage extends StatelessWidget {
         borderRadius: BorderRadius.circular(8),
         child: Image.network(
           imageUrl,
-          height: 400,
           fit: BoxFit.cover,
           loadingBuilder: (context, child, progress) {
             if (progress == null) return child;

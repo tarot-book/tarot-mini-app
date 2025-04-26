@@ -16,3 +16,9 @@ class Source {
     );
   }
 }
+
+
+class NoSourcesException implements Exception {
+  @override
+  String toString() => 'Empty sourcesd list.';
+}
