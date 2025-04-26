@@ -24,6 +24,7 @@ class TarotApp extends StatelessWidget {
       title: 'Tarot App',
       theme: appTheme,
       onGenerateRoute: AppRouter.generateRoute,
+      debugShowCheckedModeBanner: false,
     );
   }
 }
