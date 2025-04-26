@@ -9,6 +9,15 @@ final ThemeData appTheme = ThemeData(
   appBarTheme: AppBarTheme(backgroundColor: AppColors.background, elevation: 0),
   textTheme: const TextTheme(
     headlineLarge: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+    titleLarge: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+    titleMedium: TextStyle(
+      fontSize: 16,
+      fontWeight: FontWeight.w500,
+    ), // увеличено
+    titleSmall: TextStyle(
+      fontSize: 14,
+      fontWeight: FontWeight.w500,
+    ), // увеличено    
     bodyMedium: TextStyle(fontSize: 14),
   ),
   colorScheme: ColorScheme.dark(
@@ -34,17 +43,18 @@ final ThemeData appTheme = ThemeData(
     ),
   ),
   listTileTheme: ListTileThemeData(
-    selectedColor: AppColors.card, // text and icon color when selected
+    selectedColor: AppColors.secondary, // text and icon color when selected
     selectedTileColor: AppColors.card, // background color when selected
     tileColor: AppColors.card, // background color for unselected
   ),
   bottomSheetTheme: BottomSheetThemeData(
     // Полупрозрачный фон: берем surface из colorScheme и ставим альфу 0xCC (~80%)
-    backgroundColor: ColorScheme.dark(
-      primary: AppColors.primary,
-      secondary: AppColors.secondary,
-      surface: AppColors.surface,
-    ).surface.withAlpha(0x14),
+    backgroundColor:
+        ColorScheme.dark(
+          primary: AppColors.primary,
+          secondary: AppColors.secondary,
+          surface: AppColors.surface,
+        ).surface,
     // Скругление верхних углов
     shape: const RoundedRectangleBorder(
       borderRadius: BorderRadius.vertical(top: Radius.circular(16)),

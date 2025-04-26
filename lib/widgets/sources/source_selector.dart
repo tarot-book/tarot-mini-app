@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:tarot_mini_app/widgets/sources/source_picker.dart';
 import 'package:tarot_mini_app/widgets/utils/link_button.dart';
 
-const _modalRadius = Radius.circular(16);
 
 /// A widget that shows the current source as a link and opens a picker.
 class SourceSelector extends StatelessWidget {
