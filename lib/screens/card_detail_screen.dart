@@ -95,17 +95,18 @@ class _CardDetailScreenState extends State<CardDetailScreen> {
       src.id,
       CardPosition.straight,
     );
-    final reversedId = _findMeaningId(
+    final revertedId = _findMeaningId(
       card.meanings,
       src.id,
       CardPosition.reverted,
     );
 
     // Fetch meanings using service
-    final meanings = await CardMeaningService().fetchMajorCardMeanings(
-      straightId,
-      reversedId,
-    );
+    CardMeaningService cms = CardMeaningService();
+    final meanings =
+        widget.arcanaType == ArcanaType.major
+            ? await cms.fetchMajorCardMeanings(straightId, revertedId)
+            : await cms.fetchMinorCardMeanings(straightId, revertedId);
 
     return CardDetailData(card: card, sources: sources, meanings: meanings);
   }

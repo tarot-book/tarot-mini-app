@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:tarot_mini_app/models/arcana_type.dart';
 import 'package:tarot_mini_app/models/card.dart';
 import 'package:tarot_mini_app/theme/colors.dart';
 
@@ -19,7 +18,7 @@ class ArcanaCard extends StatelessWidget {
           Navigator.pushNamed(
             context,
             '/card',
-            arguments: {'cardId': card.id, 'arcanaType': ArcanaType.major},
+            arguments: {'cardId': card.id, 'arcanaType': card.arcana},
           );
         },
         hoverColor: Theme.of(context).hoverColor,

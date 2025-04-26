@@ -1,10 +1,12 @@
 // Lightweight interface for displaying cards in grid/list
+import 'package:tarot_mini_app/models/arcana_type.dart';
 import 'package:tarot_mini_app/models/meaning.dart';
 
 abstract class ArcanaCardData {
   int get id; // unique identifier
   String get title; // card title to show in thumbnails
   String get imageUrl; // image URL for preview
+  ArcanaType get arcana; // Type of Arcana
 }
 
 // Common interface for all detailed card types
@@ -13,6 +15,7 @@ abstract class FullCardData {
   int get deckId;
   String get name;
   String get imageUrl;
+  ArcanaType get arcana; // Type of Arcana
   List<CardMeaningRef> get meanings;
 }
 
@@ -70,6 +73,9 @@ class MajorCardDetail implements FullCardData {
   
   @override
   String get name => _name;
+
+  @override
+  ArcanaType get arcana => ArcanaType.major;
 }
 
 // Detailed model for Minor Arcana card
@@ -125,4 +131,7 @@ class MinorCardDetail implements FullCardData {
   
   @override
   String get name => _name;
+
+  @override
+  ArcanaType get arcana => ArcanaType.minor;  
 }

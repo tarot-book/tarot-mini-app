@@ -48,7 +48,6 @@ class CardMeaningService {
         reverted = await detailFetcher(idReverted);
       }
     }
-
     return CardMeanings(straight: straight, reverted: reverted);
   }
 

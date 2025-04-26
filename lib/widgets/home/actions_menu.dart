@@ -25,7 +25,7 @@ class ActionsMenu extends StatelessWidget {
           ArcanaMenuItem(
             title: 'Младшие арканы',
             imagePath: 'assets/images/suits.png',
-            onTap: () => Navigator.pushNamed(context, '/minor', arguments: {'deck': deck},),
+            onTap: () => Navigator.pushNamed(context, '/suits'),
           ),
         ],
       ),

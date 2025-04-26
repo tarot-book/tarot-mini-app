@@ -1,3 +1,4 @@
+import 'package:tarot_mini_app/models/arcana_type.dart';
 import 'package:tarot_mini_app/models/card.dart';
 
 
@@ -34,4 +35,7 @@ class MajorCard implements ArcanaCardData {
 
   @override
   String get imageUrl => image;
+
+  @override
+  ArcanaType get arcana => ArcanaType.major;
 }

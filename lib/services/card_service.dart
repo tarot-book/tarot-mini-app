@@ -1,5 +1,6 @@
 import 'package:tarot_mini_app/models/card.dart';
 import 'package:tarot_mini_app/models/major_card.dart';
+import 'package:tarot_mini_app/models/minor_card.dart';
 
 import 'api_client.dart';
 
@@ -17,6 +18,16 @@ class CardService {
     final data = await _client.getObject('/cards/major/$id');
     return MajorCardDetail.fromJson(data);
   }
+
+  Future<List<ArcanaCardData>> fetchMinorCards(int deckId, int suitId) async {
+    final data = await _client.getList('/cards/minor?deckId=$deckId'); // TODO: add suit parameter
+    return data
+        .where((item) => item['suit'] == suitId)
+        .map((item) => MinorCard.fromJson(item) as ArcanaCardData)
+        .toList();
+  }
+
+
 
   Future<FullCardData> fetchMinorCardDetail(int id) async {
     final data = await _client.getObject('/cards/minor/$id');
