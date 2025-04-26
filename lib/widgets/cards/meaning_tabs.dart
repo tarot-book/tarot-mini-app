@@ -8,26 +8,16 @@ class SegmentedControl<T extends Object> extends StatelessWidget {
   final Map<T, Widget> segments;
   final T selectedValue;
   final ValueChanged<T> onValueChanged;
-  final Color? borderColor;
-  final Color? selectedColor;
-  final Color? unselectedColor;
 
   const SegmentedControl({
     super.key,
     required this.segments,
     required this.selectedValue,
     required this.onValueChanged,
-    this.borderColor,
-    this.selectedColor,
-    this.unselectedColor,
   });
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context).colorScheme;
-    final cardColor = Theme.of(context).cardColor;
-    final hoverColor = Theme.of(context).hoverColor;
-    final splashColor = Theme.of(context).splashColor;
 
     return LayoutBuilder(
       builder: (context, constraints) {
@@ -46,15 +36,6 @@ class SegmentedControl<T extends Object> extends StatelessWidget {
               maxWidth: buttonWidth,
               minHeight: 36,
             ),
-            borderColor: borderColor ?? theme.secondary,
-            selectedBorderColor: borderColor ?? theme.secondary,
-            fillColor: selectedColor ?? theme.secondary,
-            selectedColor: Colors.white,
-            color: unselectedColor ?? cardColor,
-            hoverColor: hoverColor,
-            splashColor: splashColor,
-            highlightColor: hoverColor,
-            borderRadius: BorderRadius.circular(12),
             isSelected: segments.keys.map((k) => k == selectedValue).toList(),
             onPressed: (index) {
               final key = segments.keys.elementAt(index);
@@ -87,14 +68,10 @@ class _SegmentItem<T> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context).colorScheme;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
       child: Text(
         label,
-        style: TextStyle(
-          color: isSelected ? Colors.white : theme.secondary,
-        ),
       ),
     );
   }

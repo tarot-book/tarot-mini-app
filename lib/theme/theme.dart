@@ -17,7 +17,7 @@ final ThemeData appTheme = ThemeData(
     titleSmall: TextStyle(
       fontSize: 14,
       fontWeight: FontWeight.w500,
-    ), // увеличено    
+    ), // увеличено
     bodyMedium: TextStyle(fontSize: 14),
   ),
   colorScheme: ColorScheme.dark(
@@ -62,4 +62,19 @@ final ThemeData appTheme = ThemeData(
     // Можно задать elevation, modalElevation и другие свойства:
     modalElevation: 4,
   ),
+
+  toggleButtonsTheme: ToggleButtonsThemeData(
+    borderColor: Colors.white,
+    selectedBorderColor: AppColors.secondary,
+    fillColor: AppColors.secondary, // of selected segment
+    selectedColor: Colors.black, // text color of selected segment
+    color: Colors.white, 
+// text color of unselected segments
+    borderRadius: BorderRadius.circular(12),
+    constraints: const BoxConstraints(minHeight: 36),
+    splashColor: AppColors.amberSplash,
+    highlightColor: Colors.black,
+    hoverColor: Color.alphaBlend(AppColors.primaryHover, AppColors.card),
+  ),
 );
+

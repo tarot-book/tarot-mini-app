@@ -155,7 +155,7 @@ class _CardDetailScreenState extends State<CardDetailScreen> {
         // Show error UI if an error occurred
         else if (snapshot.hasError) {
           return Scaffold(
-            appBar: AppBar(title: title != null ? Text(title) : null),
+            appBar: AppBar(),
             body: _buildErrorWidget(snapshot.error),
           );
         }
