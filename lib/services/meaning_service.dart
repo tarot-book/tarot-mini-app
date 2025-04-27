@@ -1,8 +1,8 @@
 import 'package:tarot_mini_app/models/meaning.dart';
 import 'package:tarot_mini_app/services/api_client.dart';
+import 'package:tarot_mini_app/services/base_service.dart';
 
-class CardMeaningService {
-  // Underlying HTTP client, assumed available in this service
+class CardMeaningService extends BaseService {
   final _client = ApiClient();
 
   /// Fetch meanings for a major arcana card, handling nullable IDs
@@ -21,8 +21,7 @@ class CardMeaningService {
     return _fetchCardMeanings(idStraight, idReverted, fetchMinorCardDetail);
   }
 
-  /// Private helper that loads straight and reversed meanings,
-  /// using the provided detailFetcher function to load each by ID.
+  /// Private helper that loads straight and reversed meanings
   Future<CardMeanings> _fetchCardMeanings(
     int? idStraight,
     int? idReverted,
@@ -31,7 +30,6 @@ class CardMeaningService {
     CardMeaning? straight;
     CardMeaning? reverted;
 
-    // If both IDs are provided, fetch both in parallel
     if (idStraight != null && idReverted != null) {
       final results = await Future.wait([
         detailFetcher(idStraight),
@@ -40,7 +38,6 @@ class CardMeaningService {
       straight = results[0];
       reverted = results[1];
     } else {
-      // Otherwise fetch only the one that exists
       if (idStraight != null) {
         straight = await detailFetcher(idStraight);
       }
@@ -48,16 +45,26 @@ class CardMeaningService {
         reverted = await detailFetcher(idReverted);
       }
     }
+
     return CardMeanings(straight: straight, reverted: reverted);
   }
 
-  // Example detail-fetchers:
-  Future<CardMeaning> fetchMajorCardDetail(int id) async {
+  /// Fetch detail for a major arcana card meaning (cached)
+  Future<CardMeaning> fetchMajorCardDetail(int id) =>
+      fetchWithCache('majorMeaning:$id', () => _fetchMajorCardDetail(id));
+
+  /// Fetch detail for a minor arcana card meaning (cached)
+  Future<CardMeaning> fetchMinorCardDetail(int id) =>
+      fetchWithCache('minorMeaning:$id', () => _fetchMinorCardDetail(id));
+
+  /// Actual API call for major card meaning
+  Future<CardMeaning> _fetchMajorCardDetail(int id) async {
     final data = await _client.getObject('/meanings/major/$id');
     return CardMeaning.fromJson(data);
   }
 
-  Future<CardMeaning> fetchMinorCardDetail(int id) async {
+  /// Actual API call for minor card meaning
+  Future<CardMeaning> _fetchMinorCardDetail(int id) async {
     final data = await _client.getObject('/meanings/minor/$id');
     return CardMeaning.fromJson(data);
   }
