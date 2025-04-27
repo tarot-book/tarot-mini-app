@@ -14,6 +14,7 @@ abstract class BaseService {
     // If the request fails, remove it from the cache
     future.catchError((error, stackTrace) {
       _cache.remove(key);
+      throw error; 
     });
 
     return future;

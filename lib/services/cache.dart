@@ -13,6 +13,7 @@ Loader<T> cacheLoader<T>(Loader<T> loader) {
 
     future.catchError((error, stackTrace) {
       cache.remove(url);
+      throw error; // Re-throw the error to keep the Future's error state
     });
 
     return future;
