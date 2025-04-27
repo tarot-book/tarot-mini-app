@@ -6,12 +6,14 @@ class CarouselArrow extends StatelessWidget {
   final bool isLeft;
   final VoidCallback onPressed;
   final bool visible;
+   final double horizontalOffset;
 
   const CarouselArrow({
     super.key,
     required this.isLeft,
     required this.onPressed,
     this.visible = true,
+    this.horizontalOffset = 46
   });
 
   @override
@@ -24,11 +26,14 @@ class CarouselArrow extends StatelessWidget {
       child: IconButton(
         icon: Icon(
           isLeft ? Icons.arrow_left : Icons.arrow_right,
-          size: 32,
+          size: 48,
         ),
         color: Colors.white70,
         onPressed: onPressed,
-        hoverColor: Colors.white24
+        hoverColor: Colors.white24,
+        padding: EdgeInsets.zero,
+        constraints: const BoxConstraints(),
+
       ),
     );
   }
