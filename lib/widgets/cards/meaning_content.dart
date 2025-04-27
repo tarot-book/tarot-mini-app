@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tarot_mini_app/widgets/utils/text_section.dart';
+import 'package:tarot_mini_app/widgets/utils/markdown_section.dart';
 
 /// A widget that displays tarot card meaning text in a styled container.
 /// Can be used for both straight and reversed meanings.
@@ -10,6 +10,6 @@ class MeaningContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextSection(content: text, useContainer: true);
+    return MarkdownSection(data: text);
   }
 }

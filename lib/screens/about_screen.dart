@@ -1,20 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:tarot_mini_app/widgets/layout/page_layout.dart';
-import 'package:tarot_mini_app/widgets/utils/text_section.dart';
+import 'package:tarot_mini_app/widgets/utils/markdown_section.dart';
 
 const aboutText = '''
-Она поможет вам изучать традиционное Таро и быстро находить интерпретации.
+# Добро пожаловать в Азбуку Таро!
 
-Выбрав колоду, в главном меню вы сможете изучить значение любой карты в прямой и перевернутой позиции.
+Она поможет вам изучать **традиционное Таро** и быстро находить интерпретации карт из разных источников.
 
-Эта программа посвящается памяти Евгения Николаевича Колесова (1951-2017), литератора и эзотерика, известного под псевдонимом Het Monster. Тексты были подготовлены им в 1999 году для учебной программы, выпускавшейся на CD-диске.
+Выбрав на главной странице колоду, вы сможете изучить значение любой карты в прямой и перевернутой позиции.
 
-В следующих версиях будут добавлены:
+Эта программа посвящается памяти [Евгения Николаевича Колесова](https://ru.wikipedia.org/wiki/%D0%9A%D0%BE%D0%BB%D0%B5%D1%81%D0%BE%D0%B2,_%D0%95%D0%B2%D0%B3%D0%B5%D0%BD%D0%B8%D0%B9_%D0%9D%D0%B8%D0%BA%D0%BE%D0%BB%D0%B0%D0%B5%D0%B2%D0%B8%D1%87) (1951–2017), литератора и эзотерика, известного под псевдонимом _Het Monster_.
+Тексты были подготовлены им в 1999 году для учебной программы, выпускавшейся на CD-диске.
 
-• Новые колоды
-• Интерпретации комбинаций для каждой карты
-• Возможно, также расклады и демонстрация гаданий.
+## В следующих версиях
 
+Будут добавлены:
+
+- Новые колоды
+- Интерпретации комбинаций для каждой карты
+- Возможно, также расклады и демонстрация гаданий.
 ''';
 
 class AboutScreen extends StatelessWidget {
@@ -23,14 +27,10 @@ class AboutScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('About')),
-      body: PageLayout(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: TextSection(
-            title: 'Добро пожаловать в Азбуку Таро!',
-            content: aboutText,
-          ),
+      appBar: AppBar(title: const Text('О программе')),
+      body: SingleChildScrollView( // ✅ Нужно обязательно
+        child: PageLayout(
+          child: MarkdownSection(data: aboutText),
         ),
       ),
     );

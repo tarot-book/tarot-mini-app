@@ -9,6 +9,7 @@ final ThemeData appTheme = ThemeData(
   appBarTheme: AppBarTheme(backgroundColor: AppColors.background, elevation: 0),
   textTheme: const TextTheme(
     headlineLarge: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+    headlineSmall: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
     titleLarge: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
     titleMedium: TextStyle(
       fontSize: 16,
