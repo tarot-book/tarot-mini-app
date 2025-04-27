@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:tarot_mini_app/widgets/utils/text_section.dart';
 import '../../models/deck.dart';
+// Correct the import!
 
 class DeckDescription extends StatelessWidget {
   final Deck deck;
@@ -17,20 +19,11 @@ class DeckDescription extends StatelessWidget {
       alignment: Alignment.topLeft,
       child: ConstrainedBox(
         constraints: const BoxConstraints(maxWidth: 600),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              deck.name,
-              style: Theme.of(context).textTheme.headlineLarge,
-            ),
-            const SizedBox(height: 8),
-            Text(
-              deck.description,
-              textAlign: textAlign,
-              style: Theme.of(context).textTheme.bodyMedium,
-            ),
-          ],
+        child: TextSection(
+          title: deck.name,
+          content: deck.description,
+          textAlign: textAlign,
+          useContainer: false, // or true if you want background
         ),
       ),
     );
