@@ -65,7 +65,7 @@ final ThemeData appTheme = ThemeData(
   ),
 
   toggleButtonsTheme: ToggleButtonsThemeData(
-    borderColor: Colors.white,
+    borderColor: Colors.white38,
     selectedBorderColor: AppColors.secondary,
     fillColor: AppColors.secondary, // of selected segment
     selectedColor: Colors.black, // text color of selected segment

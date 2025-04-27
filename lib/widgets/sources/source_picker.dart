@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:tarot_mini_app/models/source.dart';
 
 /// A bottom sheet widget listing sources with a checkmark for the selected one.
 /// Use inside showModalBottomSheet builder.
 class SourcePickerSheet extends StatelessWidget {
-  final List<String> sources;
+  final List<Source> sources;
   final int selectedIndex;
   final ValueChanged<int> onSelected;
 
@@ -62,7 +63,7 @@ class SourcePickerSheet extends StatelessWidget {
                 final isSelected = index == selectedIndex;
                 return ListTile(
                   title: Text(
-                    sources[index],
+                    sources[index].name,
                     style: theme.textTheme.bodyMedium?.copyWith(
                       color: theme.colorScheme.onSurface,
                     ),

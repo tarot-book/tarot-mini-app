@@ -1,16 +1,19 @@
 // file: lib/screens/card_detail_screen.dart
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:tarot_mini_app/models/arcana_type.dart';
 import 'package:tarot_mini_app/models/card.dart';
 import 'package:tarot_mini_app/models/meaning.dart';
 import 'package:tarot_mini_app/models/source.dart';
+import 'package:tarot_mini_app/providers/position_state.dart';
 import 'package:tarot_mini_app/services/card_service.dart';
 import 'package:tarot_mini_app/services/meaning_service.dart';
 import 'package:tarot_mini_app/services/source_service.dart';
 import 'package:tarot_mini_app/theme/app_layout.dart';
 import 'package:tarot_mini_app/widgets/cards/card_detail.dart';
 import 'package:tarot_mini_app/widgets/layout/page_layout.dart';
+import 'package:tarot_mini_app/widgets/sources/source_selector.dart';
 
 const noMeaningText = 'Интерпретация отсутствует';
 
@@ -143,82 +146,72 @@ class _CardDetailScreenState extends State<CardDetailScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<CardDetailData>(
-      future: _dataFuture,
-      builder: (context, snapshot) {
-        Widget body;
-        String? title;
+    return ChangeNotifierProvider(
+      create: (_) => CardPositionState(),
+      child: FutureBuilder<CardDetailData>(
+        future: _dataFuture,
+        builder: (context, snapshot) {
+          Widget body;
+          String? title;
 
-        // Show loading indicator while waiting
-        if (snapshot.connectionState != ConnectionState.done) {
-          body = const Center(child: CircularProgressIndicator());
-        }
-        // Show error UI if an error occurred
-        else if (snapshot.hasError) {
+          // Show loading indicator while waiting
+          if (snapshot.connectionState != ConnectionState.done) {
+            body = const Center(child: CircularProgressIndicator());
+          }
+          // Show error UI if an error occurred
+          else if (snapshot.hasError) {
+            return Scaffold(
+              appBar: AppBar(),
+              body: _buildErrorWidget(snapshot.error),
+            );
+          }
+          // Show content when data is loaded successfully
+          else {
+            final data = snapshot.data!;
+            title = data.card.name;
+
+            final sourceSelector = SourceSelector(
+              sources: _sources!,
+              selectedIndex: _selectedSourceIndex,
+              onSourceChanged:
+                  (i) => setState(() {
+                    _selectedSourceIndex = i;
+                    // Reload meanings for new source
+                    _dataFuture = _loadData();
+                  }),
+            );
+
+            body = SingleChildScrollView(
+              padding: const EdgeInsets.all(16),
+              child: LayoutBuilder(
+                builder: (context, constraints) {
+                  final isWide =
+                      constraints.maxWidth >= AppLayout.maxParagraphWidth;
+                  final content = ConstrainedBox(
+                    constraints: const BoxConstraints(maxWidth: 800),
+                    child:
+                        isWide
+                            ? CardDetailWide(
+                              data: snapshot.data!,
+                              sourceSelector: sourceSelector,
+                            )
+                            : CardDetailNarrow(
+                              data: snapshot.data!,
+                              sourceSelector: sourceSelector,
+                            ),
+                  );
+                  return Center(child: content);
+                },
+              ),
+            );
+          }
+
           return Scaffold(
-            appBar: AppBar(),
-            body: _buildErrorWidget(snapshot.error),
+            appBar: AppBar(title: title != null ? Text(title) : null),
+            body: PageLayout(child: body),
           );
-        }
-        // Show content when data is loaded successfully
-        else {
-          final data = snapshot.data!;
-          title = data.card.name;
-          final sourceNames = data.sources.map((s) => s.name).toList();
-
-          body = SingleChildScrollView(
-            padding: const EdgeInsets.all(16),
-            child: LayoutBuilder(
-              builder: (context, constraints) {
-                final isWide =
-                    constraints.maxWidth >= AppLayout.maxParagraphWidth;
-                final content = ConstrainedBox(
-                  constraints: const BoxConstraints(maxWidth: 800),
-                  child:
-                      isWide
-                          ? CardDetailWide(
-                            imageUrl: data.card.imageUrl,
-                            sources: sourceNames,
-                            selectedIndex: _selectedSourceIndex,
-                            onSourceChanged:
-                                (i) => setState(() {
-                                  _selectedSourceIndex = i;
-                                  // Reload meanings for new source
-                                  _dataFuture = _loadData();
-                                }),
-                            straightMeaning:
-                                data.meanings.straight?.text ?? noMeaningText,
-                            reversedMeaning:
-                                data.meanings.reverted?.text ?? noMeaningText,
-                          )
-                          : CardDetailNarrow(
-                            imageUrl: data.card.imageUrl,
-                            cardName: data.card.name,
-                            sources: sourceNames,
-                            selectedIndex: _selectedSourceIndex,
-                            onSourceChanged:
-                                (i) => setState(() {
-                                  _selectedSourceIndex = i;
-                                  // Reload meanings for new source
-                                  _dataFuture = _loadData();
-                                }),
-                            straightMeaning:
-                                data.meanings.straight?.text ?? noMeaningText,
-                            reversedMeaning:
-                                data.meanings.reverted?.text ?? noMeaningText,
-                          ),
-                );
-                return Center(child: content);
-              },
-            ),
-          );
-        }
-
-        return Scaffold(
-          appBar: AppBar(title: title != null ? Text(title) : null),
-          body: PageLayout(child: body),
-        );
-      },
+        },
+      ),
     );
   }
 }

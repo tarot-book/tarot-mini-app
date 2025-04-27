@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:tarot_mini_app/models/source.dart';
 import 'package:tarot_mini_app/widgets/sources/source_picker.dart';
 import 'package:tarot_mini_app/widgets/utils/link_button.dart';
 
 
 /// A widget that shows the current source as a link and opens a picker.
 class SourceSelector extends StatelessWidget {
-  final List<String> sources;
+  final List<Source> sources;
   final int selectedIndex;
   final ValueChanged<int> onSourceChanged;
 
@@ -19,7 +20,7 @@ class SourceSelector extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return LinkButton(
-      text: sources[selectedIndex],
+      text: sources[selectedIndex].name,
       onTap: () => _showSourcePicker(context),
     );
   }

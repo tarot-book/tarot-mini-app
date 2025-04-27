@@ -1,47 +1,55 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:tarot_mini_app/constants/app_constants.dart';
+import 'package:tarot_mini_app/models/meaning.dart';
+import 'package:tarot_mini_app/providers/position_state.dart';
+import 'package:tarot_mini_app/screens/card_detail_screen.dart';
 import 'package:tarot_mini_app/widgets/cards/card_image.dart';
-import 'package:tarot_mini_app/widgets/sources/source_selector.dart';
 import 'package:tarot_mini_app/widgets/cards/meaning_tabs.dart';
+import 'package:tarot_mini_app/widgets/sources/source_selector.dart';
 
 class CardDetailWide extends StatelessWidget {
-  final String imageUrl;
-  final List<String> sources;
-  final int selectedIndex;
-  final ValueChanged<int> onSourceChanged;
-  final String straightMeaning;
-  final String reversedMeaning;
+  final CardDetailData data;
+  final SourceSelector sourceSelector;
 
   const CardDetailWide({
     super.key,
-    required this.imageUrl,
-    required this.sources,
-    required this.selectedIndex,
-    required this.onSourceChanged,
-    required this.straightMeaning,
-    required this.reversedMeaning,
+    required this.data,
+    required this.sourceSelector,
   });
 
   @override
   Widget build(BuildContext context) {
+    final position = context.watch<CardPositionState>();
+
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Expanded(flex: 4, child: CardImage(imageUrl: imageUrl)),
+        Expanded(
+          flex: 4,
+          child: CardImage(
+            imageUrl: data.card.imageUrl,
+            isReverted: position.position == CardPosition.reverted,
+          ),
+        ),
         const SizedBox(width: 24),
         Expanded(
           flex: 6,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              SourceSelector(
-                sources: sources,
-                selectedIndex: selectedIndex,
-                onSourceChanged: onSourceChanged,
-              ),
+              sourceSelector,
               const SizedBox(height: 16),
               MeaningTabs(
-                straightMeaning: straightMeaning,
-                reversedMeaning: reversedMeaning,
+                selectedPosition: position.position,
+                onPositionChanged:
+                    (newPosition) => position.setPosition(newPosition),
+                straightMeaning:
+                    data.meanings.straight?.text ??
+                    AppConstants.straightMeaningMissing,
+                revertedMeaning:
+                    data.meanings.reverted?.text ??
+                    AppConstants.revertedMeaningMissing,
               ),
             ],
           ),
@@ -52,44 +60,45 @@ class CardDetailWide extends StatelessWidget {
 }
 
 class CardDetailNarrow extends StatelessWidget {
-  final String imageUrl;
-  final String cardName;
-  final List<String> sources;
-  final int selectedIndex;
-  final ValueChanged<int> onSourceChanged;
-  final String straightMeaning;
-  final String reversedMeaning;
+  final CardDetailData data;
+  final SourceSelector sourceSelector;
 
   const CardDetailNarrow({
     super.key,
-    required this.imageUrl,
-    required this.cardName,
-    required this.sources,
-    required this.selectedIndex,
-    required this.onSourceChanged,
-    required this.straightMeaning,
-    required this.reversedMeaning,
+    required this.data,
+    required this.sourceSelector,
   });
 
   @override
   Widget build(BuildContext context) {
+    final position = context.watch<CardPositionState>();
+
     final theme = Theme.of(context).textTheme;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        CardImage(imageUrl: imageUrl),
+        CardImage(
+          imageUrl: data.card.imageUrl,
+          isReverted: position.position == CardPosition.reverted,
+        ),
         const SizedBox(height: 24),
-        Text(cardName, style: theme.headlineLarge, textAlign: TextAlign.center),
-        const SizedBox(height: 16),
-        SourceSelector(
-          sources: sources,
-          selectedIndex: selectedIndex,
-          onSourceChanged: onSourceChanged,
+        Text(
+          data.card.name,
+          style: theme.headlineLarge,
+          textAlign: TextAlign.center,
         ),
         const SizedBox(height: 16),
+        sourceSelector,
+        const SizedBox(height: 16),
         MeaningTabs(
-          straightMeaning: straightMeaning,
-          reversedMeaning: reversedMeaning,
+          selectedPosition: position.position,
+          onPositionChanged: (newPosition) => position.setPosition(newPosition),
+          straightMeaning:
+              data.meanings.straight?.text ??
+              AppConstants.straightMeaningMissing,
+          revertedMeaning:
+              data.meanings.reverted?.text ??
+              AppConstants.revertedMeaningMissing,
         ),
       ],
     );
