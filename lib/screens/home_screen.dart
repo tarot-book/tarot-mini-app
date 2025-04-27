@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:tarot_mini_app/constants/app_constants.dart';
 import 'package:tarot_mini_app/screens/deck_selector_screen.dart';
 import 'package:tarot_mini_app/widgets/layout/page_layout.dart';
 
 import '../widgets/home/actions_menu.dart';
-
-const title = 'Азбука Таро';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -12,7 +11,25 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text(title)),
+      appBar: AppBar(
+        title: const Text(AppConstants.appTitle),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.info_outline),
+            tooltip: 'About',
+            onPressed: () {
+              Navigator.of(context).pushNamed('/about');
+            },
+          ),
+          IconButton(
+            icon: const Icon(Icons.settings),
+            tooltip: 'Settings',
+            onPressed: () {
+              Navigator.of(context).pushNamed('/settings');
+            },
+          ),
+        ],
+      ),
       body: PageLayout(
         child: ListView(
           padding: const EdgeInsets.all(32),
