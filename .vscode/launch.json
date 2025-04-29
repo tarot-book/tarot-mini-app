@@ -8,6 +8,7 @@
         "deviceId": "chrome",
         "args": [
           "--web-browser-flag=--window-size=390,720"
+          //"--web-browser-flag=--auto-open-devtools-for-tabs"
         ]
       }
     ]
