@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:tarot_mini_app/providers/telegram_user_provider.dart';
 import 'package:tarot_mini_app/widgets/layout/page_layout.dart';
 
 class SettingsScreen extends StatelessWidget {
@@ -6,6 +8,10 @@ class SettingsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final telegramUser = context.watch<TelegramUserProvider>();
+
+    final bool isTelegramConnected = telegramUser.isLoaded;
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Настройки'),
@@ -25,7 +31,9 @@ class SettingsScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 24),
                   Text(
-                    'Раздел настроек появится в следующих версиях.',
+                    isTelegramConnected
+                        ? 'Пользователь: ${telegramUser.firstName ?? telegramUser.username ?? 'Неизвестный'}'
+                        : 'Платформа Telegram не подключена.',
                     textAlign: TextAlign.center,
                     style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                           color: Colors.grey,

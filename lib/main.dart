@@ -3,17 +3,23 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
 import 'package:tarot_mini_app/constants/app_constants.dart';
 import 'package:tarot_mini_app/providers/app_state.dart';
+import 'package:tarot_mini_app/providers/telegram_user_provider.dart';
 import 'package:tarot_mini_app/routes/app_router.dart';
+import 'package:tarot_mini_app/services/logger_service.dart';
 import 'theme/theme.dart';
 
 Future<void> main() async {
-  await dotenv.load(); // Загрузка .env перед запуском
+  logger.i('App started');
+  await dotenv.load();
   runApp(
-    ChangeNotifierProvider(
-      create: (_) => AppState(),
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => AppState()),
+        ChangeNotifierProvider(create: (_) => TelegramUserProvider()..loadUser()),
+      ],
       child: const TarotApp(),
     ),
-  );  
+  );
 }
 
 class TarotApp extends StatelessWidget {
