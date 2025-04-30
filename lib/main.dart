@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
 import 'package:tarot_mini_app/constants/app_constants.dart';
 import 'package:tarot_mini_app/providers/app_state.dart';
@@ -10,7 +9,6 @@ import 'theme/theme.dart';
 
 Future<void> main() async {
   logger.i('App started');
-  await dotenv.load();
   runApp(
     MultiProvider(
       providers: [
