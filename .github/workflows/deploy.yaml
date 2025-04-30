@@ -17,17 +17,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Check if tag is on master
-        run: |
-          BRANCH=$(git branch -r --contains $GITHUB_SHA | grep origin/master || true)
-          if [[ -z "$BRANCH" ]]; then
-            echo "❌ Tag is not on master. Skipping."
-            exit 1
-          fi
-
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
