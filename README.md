@@ -1,16 +1,26 @@
-# tarot_mini_app
+# 🧙 Tarot Mini App
 
-A new Flutter project.
+A Flutter-based Telegram Mini App for exploring Tarot cards, decks, and spreads.  
+Designed to be smooth, responsive, and informative — both for beginners and experienced readers.
 
-## Getting Started
+## ✨ Features
 
-This project is a starting point for a Flutter application.
+- 🔮 Interactive Tarot card viewer
+- 🃏 Navigate by Major and Minor Arcana
+- 📚 Includes deck information, card meanings, and sources
+- 🎨 Animated transitions & adaptive layout
+- 🌓 Light/dark theme support (in progress)
 
-A few resources to get you started if this is your first Flutter project:
+## 📦 Stack
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+- Flutter Web
+- Dart (>=3.0)
+- PicoCSS-inspired minimalist design
+- framer-motion-style animations
+- Provider (for state management)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## 🚀 Running Locally
+
+```bash
+flutter pub get
+flutter run -d chrome
