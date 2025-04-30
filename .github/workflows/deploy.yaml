@@ -58,4 +58,5 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           source: miniapp-web/*
+          strip_components: 1
           target: ${{ env.APP_DEPLOY_PATH }}
