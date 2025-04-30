@@ -2,7 +2,7 @@
     "version": "0.2.0",
     "configurations": [
       {
-        "name": "Flutter Web",
+        "name": "Tarot App",
         "request": "launch",
         "type": "dart",
         "deviceId": "chrome",
