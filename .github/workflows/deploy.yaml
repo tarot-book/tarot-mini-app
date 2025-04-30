@@ -51,6 +51,14 @@ jobs:
           name: miniapp-web
           path: miniapp-web
 
+      - name: Clean remote target directory
+        uses: appleboy/ssh-action@v0.1.10
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: rm -rf ${{ env.APP_DEPLOY_PATH }}/*
+
       - name: Upload to VPS
         uses: appleboy/scp-action@v0.1.4
         with:
