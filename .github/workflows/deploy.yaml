@@ -49,6 +49,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: miniapp-web
+          path: miniapp-web
 
       - name: Upload to VPS
         uses: appleboy/scp-action@v0.1.4
