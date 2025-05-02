@@ -8,6 +8,7 @@ external WebApp get telegramWebApp;
 @JS()
 extension type WebApp(JSObject _) {
   external void ready();
+  external void expand();
   external InitDataUnsafe get initDataUnsafe;
 }
 
@@ -30,6 +31,7 @@ class TelegramWebAppService {
   static void init() {
     try {
       telegramWebApp.ready();
+      telegramWebApp.expand();
       logger.i('Telegram WebApp initialized!');
     } catch (e) {
       logger.e('Not inside Telegram WebApp or error initializing: $e');
