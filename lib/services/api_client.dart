@@ -26,7 +26,6 @@ class ApiClient {
   Map<String, String> _buildHeaders() {
     return {
       'Accept': 'application/json',
-      'User-Agent': 'TarotMiniApp/${AppConstants.appVersion}',
     };
   }
 
