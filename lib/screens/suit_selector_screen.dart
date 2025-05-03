@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tarot_mini_app/models/suit.dart';
 import 'package:tarot_mini_app/providers/app_state.dart';
+import 'package:tarot_mini_app/services/logger_service.dart';
 import 'package:tarot_mini_app/services/suit_service.dart';
 import 'package:tarot_mini_app/widgets/layout/page_layout.dart';
 import 'package:tarot_mini_app/widgets/suits/suit_card.dart';
@@ -76,15 +77,16 @@ class SuitSelectorScreenState extends State<SuitSelectorScreen> {
   String _assetForSuit(int id) {
     switch (id) {
       case 1:
-        return 'assets/images/suits/cups.svg';
-      case 2:
         return 'assets/images/suits/wands.svg';
-      case 3:
+      case 2:
         return 'assets/images/suits/swords.svg';
+      case 3:
+        return 'assets/images/suits/cups.svg';
       case 4:
         return 'assets/images/suits/pentacles.svg';
       default:
-        return 'assets/images/suits/cups.svg';
+        logger.e('Unknown suit id: $id');
+         return 'assets/images/suits/wands.svg'; // TODO: use some placeholder
     }
   }
 }
