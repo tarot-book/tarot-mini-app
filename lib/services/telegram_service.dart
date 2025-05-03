@@ -1,97 +1,44 @@
 // lib/services/telegram_service.dart
-import 'dart:js_interop';
 
+import 'package:telegram_web_app/telegram_web_app.dart';
 import 'package:tarot_mini_app/services/logger_service.dart';
 
-@JS('Telegram.WebApp')
-external WebApp get telegramWebApp;
+/// Service to interact with the Telegram Web App SDK
+class TelegramService {
+  // Singleton instance of the Telegram Web App bridge
+  final TelegramWebApp _tg = TelegramWebApp.instance;
 
-@JS()
-extension type WebApp(JSObject _) {
-  /// Signals that the WebApp is ready to be used
-  external void ready();
+  /// Initializes the Telegram WebApp:
+  /// - Signals readiness
+  /// - Expands to available height
+  /// - Disables vertical swipe-to-close
+  void init() {
+    if (_tg.isSupported) {
+      _tg.ready();                    // INFORM TELEGRAM THAT WEBAPP IS READY ([pub.dev](https://pub.dev/documentation/telegram_web_app/latest/telegram_web_app/TelegramWebApp-class.html))
+      _tg.expand();                   // EXPAND TO MAXIMUM HEIGHT ([pub.dev](https://pub.dev/documentation/telegram_web_app/latest/telegram_web_app/TelegramWebApp-class.html))
+      _tg.disableVerticalSwipes();    // DISABLE SWIPE-TO-CLOSE ([pub.dev](https://pub.dev/documentation/telegram_web_app/latest/telegram_web_app/TelegramWebApp-class.html))
 
-  /// Expands the WebApp to the maximum available height
-  external void expand();
-
-  /// Disables the vertical swipe‑to‑close behavior
-  external void disableVerticalSwipes();
-
-  /// Access raw initialization data
-  external InitDataUnsafe get initDataUnsafe;
-}
-
-@JS()
-extension type InitDataUnsafe(JSObject _) {
-  external User get user;
-}
-
-@JS()
-extension type User(JSObject _) {
-  external int get id;
-  external String get username;
-  // ignore: non_constant_identifier_names
-  external String get first_name;
-  // ignore: non_constant_identifier_names
-  external String get last_name;
-}
-
-class TelegramWebAppService {
-  /// Initializes the Telegram Mini‑App SDK,
-  /// expands the window and disables swipe‑to‑close
-  static void init() {
-    try {
-      telegramWebApp.ready();
-      telegramWebApp.expand();
-      telegramWebApp.disableVerticalSwipes();
-      logger.i('Telegram WebApp initialized!');
-    } catch (e) {
-      logger.e('Not inside Telegram WebApp or error initializing: $e');
+      logger.i('Telegram WebApp initialized: expanded and swipe-to-close disabled');
+    } else {
+      logger.w('Telegram WebApp is not supported in this context');
     }
   }
 
-  /// Returns the Telegram user ID, or null if unavailable
-  static String? getUserId() {
-    try {
-      return telegramWebApp.initDataUnsafe.user.id.toString();
-    } catch (_) {
-      return null;
-    }
-  }
+  /// Returns true if running inside a Telegram WebApp
+  bool get isInsideTelegram => _tg.isSupported;  // CHECKS SUPPORT ([pub.dev](https://pub.dev/documentation/telegram_web_app/latest/telegram_web_app/TelegramWebApp-class.html))
 
-  /// Returns the Telegram username, or null if unavailable
-  static String? getUsername() {
-    try {
-      return telegramWebApp.initDataUnsafe.user.username;
-    } catch (_) {
-      return null;
-    }
-  }
+  /// Raw “unsafe” initialization data from Telegram
+  WebAppInitData? get initDataUnsafe => _tg.initDataUnsafe;  // TYPE: WebAppInitData? ([pub.dev](https://pub.dev/documentation/telegram_web_app/latest/telegram_web_app/TelegramWebApp-class.html))
 
-  /// Returns the Telegram user's first name, or null if unavailable
-  static String? getFirstName() {
-    try {
-      return telegramWebApp.initDataUnsafe.user.first_name;
-    } catch (_) {
-      return null;
-    }
-  }
+  /// Telegram user ID as string, or null if unavailable
+  String? get userId => initDataUnsafe?.user?.id.toString();
 
-  /// Returns the Telegram user's last name, or null if unavailable
-  static String? getLastName() {
-    try {
-      return telegramWebApp.initDataUnsafe.user.last_name;
-    } catch (_) {
-      return null;
-    }
-  }
+  /// Telegram username, or null if unavailable
+  String? get username => initDataUnsafe?.user?.username;
 
-  /// Checks if the code is running inside a Telegram WebApp context
-  static bool isRunningInsideTelegram() {
-    try {
-      return telegramWebApp != null;
-    } catch (_) {
-      return false;
-    }
-  }
+  /// Telegram first name, or null if unavailable
+  String? get firstName => initDataUnsafe?.user?.firstName;
+
+  /// Telegram last name, or null if unavailable
+  String? get lastName => initDataUnsafe?.user?.lastName;
 }
