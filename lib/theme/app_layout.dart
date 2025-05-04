@@ -1,4 +1,5 @@
 class AppLayout {
+  static const double narrowScreenSize = 600;
   static const double maxContentWidth = 800;
   static const double maxParagraphWidth = 600;
 

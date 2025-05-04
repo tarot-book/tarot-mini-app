@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:tarot_mini_app/constants/app_constants.dart';
 import 'package:tarot_mini_app/screens/deck_selector_screen.dart';
+import 'package:tarot_mini_app/theme/app_layout.dart';
+import 'package:tarot_mini_app/widgets/home/appbar.dart';
 import 'package:tarot_mini_app/widgets/layout/page_layout.dart';
 
 import '../widgets/home/actions_menu.dart';
@@ -10,37 +12,27 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+    final isNarrow = width < AppLayout.narrowScreenSize;
+
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(AppConstants.appTitle),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.info_outline),
-            tooltip: 'About',
-            onPressed: () {
-              Navigator.of(context).pushNamed('/about');
-            },
-          ),
-          IconButton(
-            icon: const Icon(Icons.settings),
-            tooltip: 'Settings',
-            onPressed: () {
-              Navigator.of(context).pushNamed('/settings');
-            },
-          ),
-        ],
-      ),
+      appBar: const MainAppBar(title: AppConstants.appTitle),
+
       body: PageLayout(
         child: ListView(
-          padding: const EdgeInsets.all(32),
+          // адаптивный padding
+          padding: EdgeInsets.all(isNarrow ? AppLayout.horizontalPadding : 32),
           shrinkWrap: true,
-          children: const [
+          children: [
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              padding: EdgeInsets.symmetric(
+                horizontal: isNarrow ? 8 : AppLayout.horizontalPadding,
+                vertical: 8,
+              ),
               child: DeckSelectorScreen(),
             ),
-            SizedBox(height: 16),
-            ActionsMenu(),
+            const SizedBox(height: 16),
+            const ActionsMenu(),
           ],
         ),
       ),
