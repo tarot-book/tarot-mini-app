@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
+import 'package:tarot_mini_app/theme/app_layout.dart';
 import 'package:tarot_mini_app/theme/markdown.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -14,7 +15,7 @@ class MarkdownSection extends StatefulWidget {
   const MarkdownSection({
     super.key,
     required this.data,
-    this.maxWidth = 600,
+    this.maxWidth = AppLayout.maxParagraphWidth,
     this.padding = const EdgeInsets.all(12),
     this.animationDuration = const Duration(milliseconds: 500),
   });
@@ -66,13 +67,10 @@ class _MarkdownSectionState extends State<MarkdownSection> with SingleTickerProv
         alignment: Alignment.topLeft,
         child: ConstrainedBox(
           constraints: BoxConstraints(maxWidth: widget.maxWidth),
-          child: Padding(
-            padding: widget.padding,
-            child: MarkdownBody(
-              data: widget.data,
-              styleSheet: buildMarkdownStyleSheet(context),
-              onTapLink: _onTapLink,
-            ),
+          child: MarkdownBody(
+            data: widget.data,
+            styleSheet: buildMarkdownStyleSheet(context),
+            onTapLink: _onTapLink,
           ),
         ),
       ),
