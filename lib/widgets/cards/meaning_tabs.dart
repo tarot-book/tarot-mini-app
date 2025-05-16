@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tarot_mini_app/models/meaning.dart';
+import 'package:tarot_mini_app/widgets/cards/meaning_content.dart';
 
 class MeaningTabs extends StatelessWidget {
   final CardPosition selectedPosition;
@@ -85,8 +86,8 @@ class MeaningTabs extends StatelessWidget {
           duration: const Duration(milliseconds: 500),
           child:
               selectedPosition == CardPosition.straight
-                  ? Text(straightMeaning, key: ValueKey(1))
-                  : Text(revertedMeaning, key: ValueKey(2)),
+                  ? MeaningContent(key: ValueKey(1), text: straightMeaning)
+                  : MeaningContent(key: ValueKey(2), text: revertedMeaning),
         ),
       ],
     );

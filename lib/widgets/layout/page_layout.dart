@@ -11,7 +11,7 @@ class PageLayout extends StatelessWidget {
 Widget build(BuildContext context) {
   final width = MediaQuery.of(context).size.width;
   // порог, ниже которого считаем экран «узким»
-  final isNarrow = width < AppLayout.narrowScreenSize;;
+  final isNarrow = width < AppLayout.narrowScreenSize;
 
   return Align(
     alignment: Alignment.topCenter,

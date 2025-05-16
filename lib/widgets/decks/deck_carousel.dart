@@ -10,12 +10,12 @@ class CarouselArrow extends StatelessWidget {
   final double horizontalOffset;
 
   const CarouselArrow({
-    Key? key,
+    super.key,
     required this.isLeft,
     required this.onPressed,
     this.visible = true,
     this.horizontalOffset = 0.0,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -44,12 +44,12 @@ class DeckCarousel extends StatelessWidget {
   final ValueChanged<int> onPageChanged;
 
   const DeckCarousel({
-    Key? key,
+    super.key,
     required this.controller,
     required this.decks,
     required this.currentPage,
     required this.onPageChanged,
-  }) : super(key: key);
+  });
 
   void _goToPage(int index) {
     if (index >= 0 && index < decks.length) {
