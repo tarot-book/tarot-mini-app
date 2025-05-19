@@ -44,7 +44,7 @@ final ThemeData appTheme = ThemeData(
     ),
   ),
   listTileTheme: ListTileThemeData(
-    selectedColor: AppColors.secondary, // text and icon color when selected
+    selectedColor: AppColors.amber, // text and icon color when selected
     selectedTileColor: AppColors.card, // background color when selected
     tileColor: AppColors.card, // background color for unselected
   ),
@@ -53,7 +53,7 @@ final ThemeData appTheme = ThemeData(
     backgroundColor:
         ColorScheme.dark(
           primary: AppColors.primary,
-          secondary: AppColors.secondary,
+          secondary: AppColors.amber,
           surface: AppColors.surface,
         ).surface,
     // Скругление верхних углов
@@ -66,8 +66,8 @@ final ThemeData appTheme = ThemeData(
 
   toggleButtonsTheme: ToggleButtonsThemeData(
     borderColor: Colors.white38,
-    selectedBorderColor: AppColors.secondary,
-    fillColor: AppColors.secondary, // of selected segment
+    selectedBorderColor: AppColors.amber,
+    fillColor: AppColors.amber, // of selected segment
     selectedColor: Colors.black, // text color of selected segment
     color: Colors.white, 
 // text color of unselected segments

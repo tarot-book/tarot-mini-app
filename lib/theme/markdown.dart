@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
+import 'package:tarot_mini_app/theme/colors.dart';
 
 MarkdownStyleSheet buildMarkdownStyleSheet(BuildContext context) {
   final theme = Theme.of(context);
@@ -18,5 +19,14 @@ MarkdownStyleSheet buildMarkdownStyleSheet(BuildContext context) {
     ),
     blockSpacing: 16,
     textAlign: WrapAlignment.start,
+    horizontalRuleDecoration: BoxDecoration(
+      border: Border(
+        top: BorderSide(
+          color:
+              AppColors.textSecondary, // или AppColors.border, если используешь
+          width: 0.5, // тонкая линия
+        ),
+      ),
+    ),
   );
 }

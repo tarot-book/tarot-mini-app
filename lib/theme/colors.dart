@@ -13,5 +13,7 @@ class AppColors {
   static const amberSplash = Color(0xFFFFD54F);   // splash
   static const amberHighlight = Color(0xFFFFE082); // highlight
   static const overlayDark = Colors.black45;
-
+  static const border = Colors.grey;
+  static const Color textSecondary = Colors.white54;
+   static const Color textPrimary = Colors.white;
 }

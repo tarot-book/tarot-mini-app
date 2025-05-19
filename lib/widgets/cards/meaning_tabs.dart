@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tarot_mini_app/models/meaning.dart';
+import 'package:tarot_mini_app/theme/colors.dart';
 import 'package:tarot_mini_app/widgets/cards/meaning_content.dart';
 
 class MeaningTabs extends StatelessWidget {
@@ -7,6 +8,7 @@ class MeaningTabs extends StatelessWidget {
   final ValueChanged<CardPosition> onPositionChanged;
   final String straightMeaning;
   final String revertedMeaning;
+  final String source;
 
   const MeaningTabs({
     super.key,
@@ -14,6 +16,7 @@ class MeaningTabs extends StatelessWidget {
     required this.onPositionChanged,
     required this.straightMeaning,
     required this.revertedMeaning,
+    required this.source,
   });
 
   @override
@@ -56,7 +59,7 @@ class MeaningTabs extends StatelessWidget {
                   decoration: BoxDecoration(
                     color:
                         isSelected
-                            ? Theme.of(context).colorScheme.secondary
+                            ? Theme.of(context).colorScheme.primary
                             : Colors.transparent,
                     borderRadius: BorderRadius.circular(6),
                   ),
@@ -67,8 +70,8 @@ class MeaningTabs extends StatelessWidget {
                     style: TextStyle(
                       color:
                           isSelected
-                              ? Theme.of(context).colorScheme.onSecondary
-                              : Theme.of(context).colorScheme.onSurface,
+                              ? Theme.of(context).colorScheme.onSurface
+                              : AppColors.textSecondary,
                       fontWeight:
                           isSelected ? FontWeight.bold : FontWeight.normal,
                     ),
@@ -84,8 +87,8 @@ class MeaningTabs extends StatelessWidget {
           duration: const Duration(milliseconds: 600),
           child:
               selectedPosition == CardPosition.straight
-                  ? MeaningContent(key: ValueKey(1), text: straightMeaning)
-                  : MeaningContent(key: ValueKey(2), text: revertedMeaning),
+                  ? MeaningContent(key: ValueKey(1), text: straightMeaning, source: source)
+                  : MeaningContent(key: ValueKey(2), text: revertedMeaning, source: source),
         ),
       ],
     );

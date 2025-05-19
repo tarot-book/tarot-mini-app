@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:tarot_mini_app/constants/app_constants.dart';
 import 'package:tarot_mini_app/widgets/utils/markdown_section.dart';
 
 class MeaningContent extends StatelessWidget {
   final String text;
+  final String source;
 
-  const MeaningContent({super.key, required this.text});
+  const MeaningContent({super.key, required this.text, required this.source});
 
   /// Clean and normalize the raw markdown text:
   /// 1) Unescape any double-escaped sequences like `\\n` → `\n`
@@ -32,7 +34,10 @@ class MeaningContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final md = _prepareMarkdown(text);
+    var md = _prepareMarkdown(text);
+    if (text != AppConstants.revertedMeaningMissing && text != AppConstants.straightMeaningMissing) {
+      md = '$md\n\n——$source';
+    }
     return MarkdownSection(data: md);
   }
 }

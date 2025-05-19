@@ -38,8 +38,6 @@ class CardDetailWide extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-             
-              
               MeaningTabs(
                 selectedPosition: position.position,
                 onPositionChanged:
@@ -50,6 +48,7 @@ class CardDetailWide extends StatelessWidget {
                 revertedMeaning:
                     data.meanings.reverted?.text ??
                     AppConstants.revertedMeaningMissing,
+                source: sourceSelector.selectedSource,
               ),
               const SizedBox(height: 16),
                sourceSelector,
@@ -99,6 +98,7 @@ class CardDetailNarrow extends StatelessWidget {
           revertedMeaning:
               data.meanings.reverted?.text ??
               AppConstants.revertedMeaningMissing,
+          source: sourceSelector.selectedSource,
         ),
         const SizedBox(height: 16),
         sourceSelector,        
